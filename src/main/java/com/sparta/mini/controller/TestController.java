@@ -6,13 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("/test")
-    public String test() {
-        return "테스트";
-    }
-    @GetMapping("/test2")
-    public String test2() {
-        return "테스트2번";
+    @GetMapping("/realTest")
+    public String autoBuild() {
+        return "오토빌드";
     }
 }
 
