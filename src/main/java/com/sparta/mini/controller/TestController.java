@@ -10,5 +10,9 @@ public class TestController {
     public String autoBuild() {
         return "오토빌드";
     }
+    @GetMapping("/realTest2")
+    public String autoBuild2() {
+        return "오토빌드2";
+    }
 }
 
