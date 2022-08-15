@@ -16,7 +16,7 @@ public enum Code {
     UNSUPPORTED_TOKEN("1006", "변조된 토큰입니다."),
     ACCESS_DENIED("1007", "권한이 없습니다.");
 
-
+//asdasd
 
     private String code;
     private String message;

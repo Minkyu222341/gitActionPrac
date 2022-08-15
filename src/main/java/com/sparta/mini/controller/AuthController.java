@@ -4,8 +4,6 @@ package com.sparta.mini.controller;
 import com.sparta.mini.dto.MemberRequestDto;
 import com.sparta.mini.dto.MemberResponseDto;
 import com.sparta.mini.dto.TokenDto;
-import com.sparta.mini.dto.TokenRequestDto;
-import com.sparta.mini.model.Member;
 import com.sparta.mini.repository.MemberRepository;
 import com.sparta.mini.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")
@@ -31,21 +28,22 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Optional<Member> login(@RequestBody MemberRequestDto memberRequestDto, HttpServletResponse response) {
+    public String login(@RequestBody MemberRequestDto memberRequestDto, HttpServletResponse response) {
         TokenDto tokenDto = authService.login(memberRequestDto);
         response.setHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
-        response.setHeader("Refresh-Token", tokenDto.getRefreshToken());
+//        response.setHeader("Refresh-Token", tokenDto.getRefreshToken());
         response.setHeader("Access-Token-Expire-Time", String.valueOf(tokenDto.getAccessTokenExpiresIn()));
 
         Cookie cookie = new Cookie("mycookie", tokenDto.getAccessToken());
         response.addCookie(cookie);
+        memberRepository.findByUsername(memberRequestDto.getUsername());
 
-        return memberRepository.findByUsername(memberRequestDto.getUsername());
+        return tokenDto.getAccessToken();
     }
 
-    @PostMapping("/reissue")  //재발급을 위한 로직
-    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ResponseEntity.ok(authService.reissue(tokenRequestDto));
-    }
+//    @PostMapping("/reissue")  //재발급을 위한 로직
+//    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+//        return ResponseEntity.ok(authService.reissue(tokenRequestDto));
+//    }
 
 }
