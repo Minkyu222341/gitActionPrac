@@ -12,5 +12,11 @@ public class TestController {
     public String autoBuild() {
         return "오토빌드";
     }
+
+
+    @GetMapping("/auto")
+    public String autoBuild2() {
+        return "됐나 ?";
+    }
 }
 
