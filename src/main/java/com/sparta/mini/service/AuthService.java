@@ -32,23 +32,27 @@ public class AuthService {
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
         if(!(Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getUsername()) && (memberRequestDto.getUsername().length() > 3 && memberRequestDto.getUsername().length() <13)
                 && Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getPassword()) && (memberRequestDto.getPassword().length() > 3 && memberRequestDto.getPassword().length() <33))){
-            throw new IllegalArgumentException("닉네임 혹은 비밀번호 조건을 확인해주세요.");
+            throw new IllegalArgumentException("아이디 혹은 비밀번호 조건을 확인해주세요.");
         }
         if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
             throw new IllegalArgumentException("중복된 아이디입니다.");
-        }else if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
-            throw new IllegalArgumentException("중복된 닉네임입니다.");
-        } else if (!memberRequestDto.getPassword().equals(memberRequestDto.getValidPassword()))
+        } else if(!memberRequestDto.getPassword().equals(memberRequestDto.getValidPassword())){
             throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        }else if(!memberRequestDto.getNickname().equals(memberRequestDto.getNickname())){
+            throw new IllegalArgumentException("중복된 닉네임 입니다.");
+
+        }
         Member member = memberRequestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
+        System.out.println("체크 1 :  " + memberRepository.existsByUsername(memberRequestDto.getUsername()));
+        System.out.println("체크 2 : " + memberRepository.existsByPassword(memberRequestDto.getPassword()) );
 //        if (!memberRepository.existsByUsername(memberRequestDto.getUsername()) ||
 //                !memberRepository.existsByPassword(passwordEncoder.encode(memberRequestDto.getPassword()))) {
-//            throw new RuntimeException("사용자를 찾을 수 없습니다");
+//            throw new RuntimeException("아이디나 비밀번호를 확인해주세요");
 //        }
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
@@ -67,7 +71,7 @@ public class AuthService {
                     .value(tokenDto.getRefreshToken())
                     .build();
 
-            refreshTokenRepository.save(refreshToken);
+//            refreshTokenRepository.save(refreshToken);
 
             // 5. 토큰 발급
             return tokenDto;

@@ -11,7 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("*") // 테스트용
+                .allowedMethods("GET","PUT","DELETE","OPTIONS")
+                .allowedMethods("POST")
+                .allowedHeaders("Authorization")
+                .exposedHeaders("Authorization") //
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.HEAD.name(),
@@ -19,5 +23,6 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.PUT.name(),
                         HttpMethod.DELETE.name(),
                         HttpMethod.OPTIONS.name());
+
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
 
     private final BoardService boardService;

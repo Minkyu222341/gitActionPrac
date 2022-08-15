@@ -30,7 +30,8 @@ public class BoardService {
 
 
     public Board createBoard(BoardRequestDto boardRequestDto) {
-        String nickname = getLoginMemberNickname();
+        String nickname = getLoginMemberNickname(); // 멤버
+
         Board board = Board.builder().
                 title(boardRequestDto.getTitle())
                 .content(boardRequestDto.getContent())
