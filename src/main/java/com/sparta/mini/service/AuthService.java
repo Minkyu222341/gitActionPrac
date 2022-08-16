@@ -74,7 +74,11 @@ public class AuthService {
     }
 
     public boolean validateUsername(MemberRequestDto memberRequestDto) {
-        return memberRepository.existsByUsername(memberRequestDto.getUsername());
+        boolean flag = true;
+        if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
+            flag = false;
+        }
+        return flag;
     }
 
 
