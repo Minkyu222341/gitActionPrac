@@ -39,7 +39,7 @@ public class AuthController {
         Cookie cookie = new Cookie("mycookie", tokenDto.getAccessToken());
         response.addCookie(cookie);
         final Optional<Member> loginUsername = memberRepository.findByUsername(memberRequestDto.getUsername());
-
+                            //로그인한 유저의 닉네임
         return loginUsername.get().getNickname();
     }
 
@@ -47,6 +47,8 @@ public class AuthController {
     public boolean validateUsername(@RequestBody MemberRequestDto memberRequestDto) {
         return authService.validateUsername(memberRequestDto);
     }
+
+
 
 //    @PostMapping("/reissue")  //재발급을 위한 로직
 //    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
