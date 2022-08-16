@@ -48,6 +48,10 @@ public class AuthController {
         return authService.validateUsername(memberRequestDto);
     }
 
+    @GetMapping("/nickname")
+    public String loginNickname() {
+        return authService.getLoginNickname();
+    }
 
 
 //    @PostMapping("/reissue")  //재발급을 위한 로직

@@ -4,7 +4,6 @@ import com.sparta.mini.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,12 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
 
-    private final AuthService authService;
 
-    @PostMapping("/nickname")
-    public String loginNickname() {
-        return authService.getLoginNickname();
-    }
 
 
     @GetMapping("/auto")
