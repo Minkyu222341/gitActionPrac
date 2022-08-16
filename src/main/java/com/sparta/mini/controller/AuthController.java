@@ -41,6 +41,11 @@ public class AuthController {
         return tokenDto.getAccessToken();
     }
 
+    @PostMapping("/validate")
+    public boolean validateUsername(@RequestBody MemberRequestDto memberRequestDto) {
+        return authService.validateUsername(memberRequestDto);
+    }
+
 //    @PostMapping("/reissue")  //재발급을 위한 로직
 //    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
 //        return ResponseEntity.ok(authService.reissue(tokenRequestDto));

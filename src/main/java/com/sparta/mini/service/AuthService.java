@@ -23,6 +23,8 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+
+
 //    private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
@@ -45,12 +47,6 @@ public class AuthService {
 
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
-        System.out.println("체크 1 :  " + memberRepository.existsByUsername(memberRequestDto.getUsername()));
-        System.out.println("체크 2 : " + memberRepository.existsByPassword(memberRequestDto.getPassword()) );
-//        if (!memberRepository.existsByUsername(memberRequestDto.getUsername()) ||
-//                !memberRepository.existsByPassword(passwordEncoder.encode(memberRequestDto.getPassword()))) {
-//            throw new RuntimeException("아이디나 비밀번호를 확인해주세요");
-//        }
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
 
@@ -73,8 +69,12 @@ public class AuthService {
             // 5. 토큰 발급
             return tokenDto;
         } catch (Exception e){
-            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+            throw new IllegalArgumentException("아이디 / 비밀번호를 확인해주세요");
         }
+    }
+
+    public boolean validateUsername(MemberRequestDto memberRequestDto) {
+        return memberRepository.existsByUsername(memberRequestDto.getUsername());
     }
 
 
