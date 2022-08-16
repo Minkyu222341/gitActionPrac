@@ -4,6 +4,7 @@ package com.sparta.mini.controller;
 import com.sparta.mini.dto.MemberRequestDto;
 import com.sparta.mini.dto.MemberResponseDto;
 import com.sparta.mini.dto.TokenDto;
+import com.sparta.mini.model.Member;
 import com.sparta.mini.repository.MemberRepository;
 import com.sparta.mini.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")
@@ -36,9 +38,9 @@ public class AuthController {
 
         Cookie cookie = new Cookie("mycookie", tokenDto.getAccessToken());
         response.addCookie(cookie);
-        memberRepository.findByUsername(memberRequestDto.getUsername());
+        final Optional<Member> loginUsername = memberRepository.findByUsername(memberRequestDto.getUsername());
 
-        return tokenDto.getAccessToken();
+        return loginUsername.get().getNickname();
     }
 
     @PostMapping("/validate")
