@@ -48,9 +48,9 @@ public class AuthController {
         return authService.validateUsername(memberRequestDto);
     }
 
-    @GetMapping("/nickname")
-    public String loginNickname() {
-        return authService.getLoginNickname();
+    @PostMapping("/nickname")
+    public boolean loginNickname(@RequestBody MemberRequestDto memberRequestDto) {
+        return authService.getLoginNickname(memberRequestDto);
     }
 
 

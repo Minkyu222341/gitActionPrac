@@ -89,8 +89,12 @@ public class AuthService {
         return flag;
     }
 
-    public String getLoginNickname() {
-        return getLoginMemberNickname();
+    public boolean getLoginNickname(MemberRequestDto memberRequestDto) {
+        boolean flag = true;
+        if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
+            flag = false;
+        }
+        return flag;
     }
 
 
