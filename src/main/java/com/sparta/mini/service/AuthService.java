@@ -89,7 +89,7 @@ public class AuthService {
         return flag;
     }
 
-    public boolean validateNickanme(MemberRequestDto memberRequestDto) {
+    public boolean validateNickname(MemberRequestDto memberRequestDto) {
         boolean flag = true;
         if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
             flag = false;

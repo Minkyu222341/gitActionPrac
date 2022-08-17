@@ -50,7 +50,7 @@ public class AuthController {
 
     @PostMapping("/validateNickname")
     public boolean loginNickname(@RequestBody MemberRequestDto memberRequestDto) {
-        return authService.validateNickanme(memberRequestDto);
+        return authService.validateNickname(memberRequestDto);
     }
 
     @GetMapping("/nickname")
