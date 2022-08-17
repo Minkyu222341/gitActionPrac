@@ -37,8 +37,8 @@ public class AuthService {
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
-        if(!(Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getUsername()) && (memberRequestDto.getUsername().length() > 3 && memberRequestDto.getUsername().length() <13)
-                && Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getPassword()) && (memberRequestDto.getPassword().length() > 3 && memberRequestDto.getPassword().length() <33))){
+        if(!(Pattern.matches("^[a-zA-Z](?=.{0,28}[0-9])[0-9a-zA-Z]{6,15}$",memberRequestDto.getUsername()) && (memberRequestDto.getUsername().length() > 3 && memberRequestDto.getUsername().length() <13)
+                && Pattern.matches("^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$",memberRequestDto.getPassword()) && (memberRequestDto.getPassword().length() > 3 && memberRequestDto.getPassword().length() <33))){
             throw new IllegalArgumentException("아이디 혹은 비밀번호 조건을 확인해주세요.");
         }
         if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
@@ -98,7 +98,7 @@ public class AuthService {
     }
 
     public String getLoginNickname() {
-        return getLoginMemberNickname();
+        return getLoginNickname();
     }
 
 
