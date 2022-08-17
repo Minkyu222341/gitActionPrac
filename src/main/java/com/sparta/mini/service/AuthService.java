@@ -98,7 +98,7 @@ public class AuthService {
     }
 
     public String getLoginNickname() {
-        return getLoginNickname();
+        return getLoginMemberNickname();
     }
 
 
