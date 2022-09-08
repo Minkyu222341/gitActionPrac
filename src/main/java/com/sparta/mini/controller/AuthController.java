@@ -3,6 +3,7 @@ package com.sparta.mini.controller;
 
 import com.sparta.mini.dto.MemberRequestDto;
 import com.sparta.mini.dto.MemberResponseDto;
+import com.sparta.mini.dto.TestResponseDto;
 import com.sparta.mini.dto.TokenDto;
 import com.sparta.mini.model.Member;
 import com.sparta.mini.repository.MemberRepository;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
@@ -30,17 +30,24 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody MemberRequestDto memberRequestDto, HttpServletResponse response) {
+    public TestResponseDto login(@RequestBody MemberRequestDto memberRequestDto, HttpServletResponse response) {
         TokenDto tokenDto = authService.login(memberRequestDto);
         response.setHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
 //        response.setHeader("Refresh-Token", tokenDto.getRefreshToken());
         response.setHeader("Access-Token-Expire-Time", String.valueOf(tokenDto.getAccessTokenExpiresIn()));
 
-        Cookie cookie = new Cookie("mycookie", tokenDto.getAccessToken());
-        response.addCookie(cookie);
+
         final Optional<Member> loginUsername = memberRepository.findByUsername(memberRequestDto.getUsername());
-                            //로그인한 유저의 닉네임
-        return loginUsername.get().getNickname();
+        String accessToken = tokenDto.getAccessToken();
+        String nickname = loginUsername.get().getNickname();
+
+        TestResponseDto tokenAndNickname = TestResponseDto.builder()
+                .token(accessToken)
+                .username(nickname)
+                .build();
+
+        //로그인한 유저의 닉네임
+        return tokenAndNickname;
     }
 
     @PostMapping("/validateId")

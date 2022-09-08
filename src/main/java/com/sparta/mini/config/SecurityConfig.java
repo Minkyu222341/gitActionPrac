@@ -74,10 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/board/{id}").permitAll()
                 .antMatchers("/auto").permitAll()
                 //CORS관련
-                .antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
 //                .antMatchers("/api/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
-
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
