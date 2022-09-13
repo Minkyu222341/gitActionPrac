@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    username: aowlrsnfk1
+    url: jdbc:mysql://springboot-db.cxpcdw3whmze.ap-northeast-2.rds.amazonaws.com:3306/hanghae
+    password: qaz124578
+  jpa:
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    org.hibernate.sql: debug
+
+
+
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+
